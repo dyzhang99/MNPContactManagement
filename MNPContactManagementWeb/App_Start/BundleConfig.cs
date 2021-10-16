@@ -25,6 +25,14 @@ namespace MNPContactManagementWeb
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/home").Include(
+               "~/Scripts/SiteJs/contactlist.js"
+               ));
+
+            bundles.Add(new ScriptBundle("~/bundles/contact").Include(
+               "~/Scripts/SiteJs/contactdetail.js"
+               ));
         }
     }
 }
