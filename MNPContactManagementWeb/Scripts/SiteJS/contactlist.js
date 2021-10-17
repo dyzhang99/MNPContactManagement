@@ -1,4 +1,4 @@
-﻿var contactList = function () {
+﻿var contactListFn = function () {
     var Config = {
         apiURL: "https://localhost:44369/api", 
         dataGridContactList: null,
@@ -47,16 +47,39 @@
                 //    }
                 //    else {  
                 //    }
-                //},  
+                //},                   
                 columns: [                     
-                    { orderable: true, name: "ContactName", data: "contactName" },
-                    { orderable: true, name: "Address", data: "address" },
+                    { orderable: false, name: "ContactID", data: "contactId"},
+                    {
+                        orderable: true, data: null,
+                        render: function (data, type, row) {
+                            nameAndTitle = data.contactName + ' <br/>' + data.jobTitle ; 
+                            return nameAndTitle;
+                        }
+                    },
+                    {
+                        //TODO: Display value for this column
+                        orderable: true, data: null,
+                        render: function (data, type, row) {
+                            return "";
+                        }
+                    },
                     { orderable: false, name: "Phone", data: "phone" },
-                    { orderable: false, name: "EmailAddress", data: "emailAddress" },
-                    { orderable: false, name: "LastDateContacted", data: "lastDateContacted" } 
+                    { orderable: false, name: "Address", data: "address" },                    
+                    { orderable: false, name: "EmailAddress", data: "emailAddress" }, 
+                    {
+                        orderable: false, data: null,
+                        render: function (data, type, row) {                           
+                            return contactListFn.ParseDateTimeOffset(data.lastDateContacted);
+                        } 
+                    }
                 ],
                 columnDefs: [
-                    { className: "text-left", "targets": 0 }
+                    // Make ContactID column invisible but store ContactID in the data table so that the ContactID can be retrieved after clicking a row
+                    {
+                        "targets": [0],
+                        "visible": false
+                    },
                 ],               
                 fnInfoCallback: function (oSettings, iStart, iEnd, iMax, iTotal, sPre) {
                     // Customize entry info
@@ -64,22 +87,36 @@
                 }, 
                 order: [[2, "ASC"]] // ContactName
             });
-        },
+        }, 
     }     
 
-    $("#btnCreateNewContact").on("click", function () {
-        // 
+    // Click a row in the Contact List datagrid to send user to the Contact Detail page. 
+    $(document).on('click', '#ContactList_DataTable tr', function () {
+        var tr = $(this).closest('tr');
+        var row = Config.dataGridContactList.row(tr);
+        rowData = row.data(); 
+        window.location = "/Contact/Index/" + rowData.contactId;         
+    }); 
+
+    // Click Create New Contact button to load the Contact Detail page
+    $("#btnCreateNewContact").on("click", function () {        
           window.location = "/Contact"; 
     });
       
     return {
         init: function () {
             infrastructure.LoadContactList();
+        },
+
+        // Convert DateTimeOffset value to MMM DD, YYYY format
+        ParseDateTimeOffset: function (dateTimeOffsetValue) {            
+            var dateTimeValue = new Date(dateTimeOffsetValue);
+            return dateTimeValue.toUTCString().split(' ')[2] + ' ' + dateTimeValue.toUTCString().split(' ')[1] + ', ' + dateTimeValue.toUTCString().split(' ')[3] 
         } 
     }
 }();
 
 $(document).ready(function () {
-    contactList.init();
+    contactListFn.init();   
 });
 

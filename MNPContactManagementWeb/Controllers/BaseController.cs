@@ -16,8 +16,8 @@ namespace MNPContactManagementWeb.Controllers
 
         // Current approach: Use Ajax to call API. 
         // Settings when using HttpClient to call API from Controller
-        HttpClient httpClient;
-        Uri baseAddress = new Uri("https://localhost:44369/api");
+        protected HttpClient httpClient;
+        protected Uri baseAddress = new Uri("https://localhost:44369/api");
 
         public BaseController()
         {
