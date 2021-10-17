@@ -3,17 +3,21 @@
 }
 
 <div>
-    <h3>NP Contact Management Demo</h3>
+    <h3>MNP Contact Management Demo</h3>
 </div>
 
 <div class="row">
     <div class="col-md-12">
+
+        <div style="text-align: left; padding-top:10px; padding-bottom: 10px;">
+            <button id="btnCreateNewContact" name="btnCreateNewContact" class="btn btn-primary">Create New Contact</button>
+        </div>
+
         <!-- #region Contact List Datagrid -->
         <table class="table table-bordered" style="width:100%" id="ContactList_DataTable">
             <thead>
                 <tr role="row">
                     <th width="20%">Name (Job Title)</th>
-                    <th width="20%">Company</th>
                     <th width="10%">Phone</th>
                     <th width="30%">Address</th>
                     <th width="10%">Email</th>
@@ -30,3 +34,5 @@
     @Scripts.Render("~/bundles/home")
 
 }
+﻿
+​

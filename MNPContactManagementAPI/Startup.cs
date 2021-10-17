@@ -41,7 +41,14 @@ namespace MNPContactManagementAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.UseHttpsRedirection(); 
+            // blocked by CORS policy
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
             app.UseHttpsRedirection();
+
 
             app.UseRouting();
 
