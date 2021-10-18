@@ -57,13 +57,7 @@
                             return nameAndTitle;
                         }
                     },
-                    {
-                        //TODO: Display value for this column
-                        orderable: true, data: null,
-                        render: function (data, type, row) {
-                            return "";
-                        }
-                    },
+                    { orderable: true, name: "Customer", data: "customer.customerName" },
                     { orderable: false, name: "Phone", data: "phone" },
                     { orderable: false, name: "Address", data: "address" },                    
                     { orderable: false, name: "EmailAddress", data: "emailAddress" }, 
@@ -85,6 +79,9 @@
                     // Customize entry info
                     return iEnd + " of " + iTotal + " entries";
                 }, 
+                createdRow: function (row, data, dataIndex) {                     
+                   // TODO: row background color change 
+                },
                 order: [[2, "ASC"]] // ContactName
             });
         }, 
@@ -95,9 +92,9 @@
         var tr = $(this).closest('tr');
         var row = Config.dataGridContactList.row(tr);
         rowData = row.data(); 
-        window.location = "/Contact/Index/" + rowData.contactId;         
+        window.location = "/Contact/Index/" + rowData.contactId;    
     }); 
-
+     
     // Click Create New Contact button to load the Contact Detail page
     $("#btnCreateNewContact").on("click", function () {        
           window.location = "/Contact"; 

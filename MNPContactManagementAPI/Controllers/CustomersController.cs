@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MNPContactManagementAPI.Models;
@@ -27,6 +26,7 @@ namespace MNPContactManagementAPI.Controllers
             return await _context.Customer.ToListAsync();
         }
 
+        #region Functions not required for the current request
         //// GET: api/Customers/5
         //[HttpGet("{id}")]
         //public async Task<ActionResult<Customer>> GetCustomer(int id)
@@ -105,5 +105,6 @@ namespace MNPContactManagementAPI.Controllers
         //{
         //    return _context.Customer.Any(e => e.CustomerId == id);
         //}
+        #endregion        
     }
 }

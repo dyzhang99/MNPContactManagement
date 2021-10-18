@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MNPContactManagementAPI.Models;
@@ -24,7 +22,10 @@ namespace MNPContactManagementAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContactDetail>>> GetContactDetail()
         {
-            return await _context.ContactDetail.ToListAsync();
+            //return await _context.ContactDetail.ToListAsync();
+            return await _context.ContactDetail
+                .Include(c => c.Customer)
+                .ToListAsync();
         }
 
         // GET: api/ContactDetails/5
@@ -44,7 +45,7 @@ namespace MNPContactManagementAPI.Controllers
         // PUT: api/ContactDetails/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")] 
         public async Task<IActionResult> PutContactDetail(int id, ContactDetail contactDetail)
         {
             if (id != contactDetail.ContactId)
@@ -85,21 +86,23 @@ namespace MNPContactManagementAPI.Controllers
             return CreatedAtAction("GetContactDetail", new { id = contactDetail.ContactId }, contactDetail);
         }
 
-        // DELETE: api/ContactDetails/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ContactDetail>> DeleteContactDetail(int id)
-        {
-            var contactDetail = await _context.ContactDetail.FindAsync(id);
-            if (contactDetail == null)
-            {
-                return NotFound();
-            }
+        #region Function not required for the current request
+        //// DELETE: api/ContactDetails/5
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult<ContactDetail>> DeleteContactDetail(int id)
+        //{
+        //    var contactDetail = await _context.ContactDetail.FindAsync(id);
+        //    if (contactDetail == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.ContactDetail.Remove(contactDetail);
-            await _context.SaveChangesAsync();
+        //    _context.ContactDetail.Remove(contactDetail);
+        //    await _context.SaveChangesAsync();
 
-            return contactDetail;
-        }
+        //    return contactDetail;
+        //}
+        #endregion
 
         private bool ContactDetailExists(int id)
         {
