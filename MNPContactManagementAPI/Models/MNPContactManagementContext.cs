@@ -28,9 +28,9 @@ namespace MNPContactManagementAPI.Models
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        { 
             modelBuilder.Entity<ContactDetail>(entity =>
-            {
+            {                
                 entity.HasKey(e => e.ContactId);
 
                 entity.Property(e => e.ContactId).HasColumnName("ContactID");
@@ -60,26 +60,26 @@ namespace MNPContactManagementAPI.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Phone)
+                entity.Property(e => e.Phone) 
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.ContactDetail)
-                    .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ContactDetail_Customer");
+                  
+                //entity.HasOne(d => d.Customer) 
+                //    .WithMany(p => p.ContactDetail)
+                //    .HasForeignKey(d => d.CustomerId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_ContactDetail_Customer");
             });
-
+            
             modelBuilder.Entity<Customer>(entity =>
-            {
+            {                
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
                 entity.Property(e => e.CustomerName)
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
-            });
+            });             
 
             OnModelCreatingPartial(modelBuilder);
         }

@@ -16,7 +16,7 @@
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.ContactID)
-    <div class="row">
+           <div class="row">
         <div class="col-md-12" style="padding-bottom:10px;">
             <div class="col-md-4">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -109,7 +109,5 @@
     </div> 
     @section Scripts{
 
-        @Scripts.Render("~/bundles/contact")
-
-
+        @Scripts.Render("~/bundles/contact") 
     }

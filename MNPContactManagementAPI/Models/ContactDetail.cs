@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-
+using System.Collections.Generic; 
 namespace MNPContactManagementAPI.Models
 {
     public partial class ContactDetail
@@ -14,7 +13,7 @@ namespace MNPContactManagementAPI.Models
         public string EmailAddress { get; set; }
         public string Comments { get; set; }
         public DateTimeOffset LastDateContacted { get; set; }
-
+         
         public virtual Customer Customer { get; set; }
     }
 }

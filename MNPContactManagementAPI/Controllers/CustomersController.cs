@@ -101,9 +101,9 @@ namespace MNPContactManagementAPI.Controllers
         //    return customer;
         //}
 
-        private bool CustomerExists(int id)
-        {
-            return _context.Customer.Any(e => e.CustomerId == id);
-        }
+        //private bool CustomerExists(int id)
+        //{
+        //    return _context.Customer.Any(e => e.CustomerId == id);
+        //}
     }
 }

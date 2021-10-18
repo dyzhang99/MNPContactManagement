@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 
 namespace MNPContactManagementAPI.Models
 {
@@ -11,7 +11,7 @@ namespace MNPContactManagementAPI.Models
         }
 
         public int CustomerId { get; set; }
-        public string CustomerName { get; set; }
+        public string CustomerName { get; set; }  
 
         public virtual ICollection<ContactDetail> ContactDetail { get; set; }
     }

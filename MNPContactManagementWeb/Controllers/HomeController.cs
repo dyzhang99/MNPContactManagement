@@ -10,7 +10,8 @@ namespace MNPContactManagementWeb.Controllers
     public class HomeController : BaseController
     { 
         public ActionResult Index()
-        { 
+        {
+            logger.Debug("Hey");
             return View();
         }         
     }

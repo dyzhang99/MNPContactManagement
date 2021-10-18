@@ -49,7 +49,7 @@ namespace MNPContactManagementWeb.Controllers
                     vm.CustomerList = from Customer c in CustomerList
                                       select new SelectListItem { Value = c.CustomerID.ToString(), Text = c.CustomerName };
                 }
-            }
+            }            
             return View(vm);
         }
 
