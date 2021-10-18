@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    // Initialize and configure Date Picker field
     var $datePicker = $('#' + "txtLastDateContacted");
     $datePicker.datepicker({
         orientation: "bottom auto",
@@ -8,4 +9,7 @@
         autoclose: true,
         language: 'en'
     });
+
+    // Customize field mask
+    $('#txtPhone').mask('000-000-0000');  
 })

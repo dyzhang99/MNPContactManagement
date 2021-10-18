@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace MNPContactManagementAPI
 {
     public class Startup
-    {
+    { 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -35,18 +35,18 @@ namespace MNPContactManagementAPI
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        {  
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            //app.UseHttpsRedirection(); 
-            // blocked by CORS policy
+              
+            // Following settings fix the "locked by CORS policy" issue
             app.UseCors(x => x
             .AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader());
+
             app.UseHttpsRedirection();
 
 

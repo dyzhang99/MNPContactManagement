@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic; 
 using System.Threading.Tasks; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MNPContactManagementAPI.Models;
+using MNPContactManagementAPI.Models; 
 
 namespace MNPContactManagementAPI.Controllers
-{
+{ 
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
@@ -22,7 +20,7 @@ namespace MNPContactManagementAPI.Controllers
         // GET: api/Customers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
-        {
+        { 
             return await _context.Customer.ToListAsync();
         }
 

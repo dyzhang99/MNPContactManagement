@@ -58,6 +58,10 @@ namespace MNPContactManagementWeb.Controllers
                         vm.Comments = contactDetail.Comments;
                         vm.CustomerID = contactDetail.CustomerId;
                     }
+                    else
+                    { 
+                        logging.Error(string.Format("responseContactInfo StatusCode: {0} Reason: {1})", responseContactInfo.StatusCode, responseContactInfo.ReasonPhrase));
+                    }
                 } 
             }            
             return View(vm);
@@ -69,6 +73,7 @@ namespace MNPContactManagementWeb.Controllers
         {
             // This Index method gets called after clicking Subtmit button.
 
+            // ViewBag stored Success or Failure message that will be displayed on page, it should always been cleaned up.
             ViewBag.Message = string.Empty;
 
             // Call API to get list fo Company DDL as the DDL control needs to have items to be recreated
@@ -81,6 +86,10 @@ namespace MNPContactManagementWeb.Controllers
                 var jsonCustomers = responseCustomer.Content.ReadAsStringAsync().Result;
                 CustomerList = JsonConvert.DeserializeObject<IEnumerable<Customer>>(jsonCustomers);
             }
+            else
+            {
+               logging.Error(string.Format("responseCustomer StatusCode: {0} Reason: {1})", responseCustomer.StatusCode, responseCustomer.ReasonPhrase));
+            }  
 
             // Assign to ContactDetailVM's CustomerList memeber
             model.CustomerList = from Customer c in CustomerList
@@ -88,14 +97,10 @@ namespace MNPContactManagementWeb.Controllers
              
             if (ModelState.IsValid)
             {
-                // Specify HttpRequest headers
-                //httpClient.DefaultRequestHeaders
-                //                .Accept
-                //                .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                // Call API to create or update Contact Details    
-
-                dynamic jsData = JsonConvert.SerializeObject(model);
-                ContactDetail contactDetail = JsonConvert.DeserializeObject<ContactDetail>(jsData);
+                // Form validation has passed, serialize form's View Model object to JSON.
+                dynamic jsonData = JsonConvert.SerializeObject(model);
+                // Deserialize View Model's JSON data into ContactDetail object
+                ContactDetail contactDetail = JsonConvert.DeserializeObject<ContactDetail>(jsonData);
 
                 if (model.ContactID > 0)                    
                 {
@@ -103,15 +108,15 @@ namespace MNPContactManagementWeb.Controllers
                     using (var content = new StringContent(JsonConvert.SerializeObject(contactDetail), System.Text.Encoding.UTF8, "application/json"))
                     {
                         // NOTE: PUT method's call needs to have the ID in the URL, otherwise API will return 'Method Not Allowed' error.
-                        HttpResponseMessage result = httpClient.PutAsync(baseAddress + "/ContactDetails/" + model.ContactID, content).Result;                         
-                        if (result.IsSuccessStatusCode)
+                        HttpResponseMessage responsePutContactDetails = httpClient.PutAsync(baseAddress + "/ContactDetails/" + model.ContactID, content).Result;                         
+                        if (responsePutContactDetails.IsSuccessStatusCode)
                         {
-                            ViewBag.Message = "Contact updated";
+                            ViewBag.Message = "Contact updated successfully";
                         }
                         else 
                         {
-                            ViewBag.Message = "Update failed";
-                            // TODO: log error                             
+                            ViewBag.Message = "Contact update failed"; 
+                            logging.Error(string.Format("responsePutContactDetails StatusCode: {0} Reason: {1})", responsePutContactDetails.StatusCode, responsePutContactDetails.ReasonPhrase)); 
                         } 
                     }          
                 }
@@ -120,15 +125,15 @@ namespace MNPContactManagementWeb.Controllers
                     // Create a new Contact
                     using (var content = new StringContent(JsonConvert.SerializeObject(contactDetail), System.Text.Encoding.UTF8, "application/json"))
                     {
-                        HttpResponseMessage result = httpClient.PostAsync(baseAddress + "/ContactDetails", content).Result;
-                        if (result.IsSuccessStatusCode)
+                        HttpResponseMessage responsePostContactDetails = httpClient.PostAsync(baseAddress + "/ContactDetails", content).Result;
+                        if (responsePostContactDetails.IsSuccessStatusCode)
                         {
                             ViewBag.Message = "Contact added";
                         }
                         else
                         {
                             ViewBag.Message = "Failed";
-                            // TODO: log error 
+                            logging.Error(string.Format("responsePostContactDetails StatusCode: {0} Reason: {1})", responsePostContactDetails.StatusCode, responsePostContactDetails.ReasonPhrase));
                         }
                     }
                 }

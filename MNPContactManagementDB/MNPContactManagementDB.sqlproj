@@ -57,9 +57,12 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="table" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="table\ContactDetail.sql" />
     <Build Include="table\Customer.sql" />
+    <Build Include="Scripts\ContactDetailData.sql" />
+    <Build Include="Scripts\CustomerData.sql" />
   </ItemGroup>
 </Project>

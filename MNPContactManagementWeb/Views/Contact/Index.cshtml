@@ -63,7 +63,7 @@
                         <div class="form-group">
                             @Html.LabelFor(m => m.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
-                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", id = "txtPhone", name = "txtPhone" })
                                 @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                     <div style="color:red">@ViewBag.Message </div>
                 </div>
                 <div class="col-md-12" style="text-align:center;">
-                    <button type="submit" id="btnSave" class="btn btn-primary">Save</button>
+                    <button type="submit" id="btnSave" class="btn btn-primary" onClick="if (!confirm('Submit? Please confirm.')) { return false;};">Save</button>
                     @Html.ActionLink("Cancel", "", "Home", null, new { @class = "btn btn-primary" })
                 </div>
             </div>
